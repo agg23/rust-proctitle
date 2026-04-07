@@ -51,6 +51,15 @@ the main thread.
 More BSD-ish process-global changes are possible by modifying the process
 environment, but this is not yet supported because it's wildly unsafe.
 
+#### macOS
+
+On macOS, `proctitle` sets the process name as displayed in Activity Monitor
+by calling private Launch Services APIs at runtime. The current thread name is set via
+`pthread_setname_np()`.
+
+If the Launch Services APIs are unavailable, the function silently falls back
+to only setting the thread name.
+
 #### Windows
 
 [`SetConsoleTitleW()`] is used to set a title for the console, if any.
